@@ -23,10 +23,17 @@ from clases.Evaluacion import *
 from clases.Evento import *
 from clases.Inscrito import *
 from clases.MiembroCp import *
+
 # ------------------------------------------------------------
 #		Funciones y Procedimientos
 # ------------------------------------------------------------        
 
+##
+# print_articulos
+# Impresion de una lista de articulos.
+#
+# Entrada: Lista de tipo Articulo.
+##
 def print_articulos(lista):
   if not (len(lista) == 0):
     print
@@ -37,6 +44,22 @@ def print_articulos(lista):
       print '%s %d' % ("	Evaluaciones: ", lista[x].get_num_evaluaciones())
       print '%s %d' % ("	Evaluadores: ", lista[x].get_num_evaluadores())
       print '%s %s' % ("        Pais: ", lista[x].get_pais())
+
+ #     print ("        Estado final: ")
+      estado_final = lista[x].get_estado_final()
+      if (estado_final == 0):
+        print("        Aun sin definir.")
+      elif (estado_final == 1):
+        print("        ACEPTADO")
+      elif (estado_final == 2):
+        print("        ACEPTADO [Especial]")
+      elif (estado_final == 3):
+        print("        RECHAZADO [Falta de cupo]")  
+      elif (estado_final == 4):
+        print("        RECHAZADO [Promedio insuficiente]")
+      else:
+        print("        No definido.")
+
       print  
     print
   else:
@@ -46,33 +69,51 @@ def print_articulos(lista):
     print("-------------------------------")    
     print
 
+##
+# print_topicos
+# Impresion de una lista de topicos.
+#
+# Entrada: Lista de tipo Topico.
+##
 def print_topicos(topicos):
   for x in range(len(topicos)):
     print '%s%d%s' % ("[", x, "] " + topicos[x])
     print     
     
-def evaluar_promedio(conf, titulo):
-  articulos = conf.get_articulos()
-  x = -1
-  fin = False
+##
+# evaluar_promedio
+# Clasificacion de un articulo segun la evaluacion de su promedio obtenido.
+#
+# Entrada: Conferencia, titulo de un Articulo.
+##
+#def evaluar_promedio(conf, titulo):
+#  articulos = conf.get_articulos()
+#  x = -1
+#  fin = False
 
-  while (x < len(articulos)) and not fin:
-    x += 1
-    fin = (articulos[x].get_titulo() == titulo)
+#  while (x < len(articulos)) and not fin:
+#    x += 1
+#    fin = (articulos[x].get_titulo() == titulo)
  
-    num_evaluadores = articulos[x].get_num_evaluadores()
-    num_evaluaciones = articulos[x].get_num_evaluaciones()
-    promedio = articulos[x].get_promedio()
-    max_articulos = conf.get_max_articulos()
+##  num_evaluadores = articulos[x].get_num_evaluadores()
+#  num_evaluaciones = articulos[x].get_num_evaluaciones()
+#  promedio = articulos[x].get_promedio()
+#  max_articulos = conf.get_max_articulos()
  
-  if num_evaluaciones == num_evaluadores:
-    if not (promedio <= 2):
-      agregar_articulo(conf.get_aceptables(), conf.get_articulo(x))
+#  if num_evaluaciones == num_evaluadores:
+#    if not (promedio <= 2):
+#      agregar_articulo(conf.get_aceptables(), conf.get_articulo(x))
     #else:
       # Rechazar articulo
 
-def agregar_articulo(lista, articulo):
-  lista.append(articulo)
+##
+# agregar_articulo
+# Agrega un articulo a una lista dada.
+#
+# Entrada: Lista, Articulo.
+##
+#def agregar_articulo(lista, articulo):
+#  lista.append(articulo)
    
 def set_topicos(topicos):
   print
@@ -145,7 +186,7 @@ clei.set_max_articulos(3)
 #
 
 articulo7 = Articulo()
-articulo7.promedio = 3
+articulo7.promedio = 4
 articulo7.num_evaluaciones = 3
 articulo7.num_evaluadores = 3
 
@@ -251,11 +292,15 @@ while not salir:
       print
       print("[4] Lista de Articulos Aceptables")
       print
-      print("[5] Lista de Articulos Aceptados/Empatados")
+      print("[5] Lista de Articulos Aceptados")
       print
-      print("[6] Registrar un espacio")
+      print("[6] Lista de Articulos Empatados")
       print
-      print("[7] Registrar un evento")
+      print("[7] Lista de Articulos Rechazados")
+      print
+      print("[8] Registrar un espacio")
+      print
+      print("[9] Registrar un evento")
       print
       print("[10] Volver")
       print
@@ -449,6 +494,10 @@ while not salir:
 	ans = raw_input("Desea finalizar la presentacion de articulos? (S/N) ")
 	if ans not in ["n", "N"]:
 	  clei.fin_pres_articulos()
+
+          # Finalizado el periodo de presentacion de articulos, se evaluan los
+          # promedios y se arman las listas de Aceptables, Aceptados y Rechazados.
+          clei.armar_listas()
 	  os.system('clear')
 	  
       elif ans == "3":
@@ -457,8 +506,8 @@ while not salir:
 	print "-------------------"
 	
 	print_articulos(clei.get_articulos())
-	    
-      elif (ans == "4") or (ans == "5"):
+
+      elif ans in ["4", "5", "6", "7"]:
 	pres_articulos = clei.get_pres_articulos()
 	if pres_articulos:
 	  print
@@ -486,14 +535,14 @@ while not salir:
             print
             new_ans = raw_input(">> ")
 	    if new_ans == "0":
-                eval = Evaluacion()
-                listas = eval.calcular_aceptados_promedio(clei.aceptables,clei.get_max_articulos())
+              eval = Evaluacion()
+              listas = eval.calcular_aceptados_promedio(clei.aceptables,clei.get_max_articulos())
             if new_ans == "1":
-                eval = Evaluacion(calcular_aceptados_pais)
-                listas = eval.calcular_aceptados_promedio(eval,clei.aceptables,clei.get_max_articulos())
+              eval = Evaluacion(calcular_aceptados_pais)
+              listas = eval.calcular_aceptados_promedio(eval,clei.aceptables,clei.get_max_articulos())
             if new_ans == "2":
-                eval = Evaluacion(calcular_aceptados_nota)
-                listas = eval.calcular_aceptados_promedio(eval,clei.aceptables,clei.get_max_articulos())
+              eval = Evaluacion(calcular_aceptados_nota)
+              listas = eval.calcular_aceptados_promedio(eval,clei.aceptables,clei.get_max_articulos())
             print
 	    print "ARTICULOS ACEPTADOS"
 	    print "-------------------"
@@ -506,22 +555,37 @@ while not salir:
             clei.set_empatados(listas[1])
 	    print_articulos(clei.get_empatados())
       
-      elif (ans == "6"):
-	espacio = Espacio()
-	clei.agregar_espacio(espacio)
+     
+          elif ans == "6":
+	    print
+	    print "ARTICULOS EMPATADOS"
+	    print "-------------------"
+	    
+	    print_articulos(clei.get_empatados())
+
+          elif ans == "7":
+	    print
+	    print "ARTICULOS RECHAZADOS"
+	    print "--------------------"
+	    
+	    print_articulos(clei.get_rechazados())
+
+      elif (ans == "8"):
+        espacio = Espacio()
+ 	clei.agregar_espacio(espacio)
         print
         print "-------------------"
         print "Espacio registrado"
-	print "-------------------"
+        print "-------------------"
 	
-      elif (ans == "7"):
+      elif (ans == "9"):
 	evento = Evento()
 	clei.agregar_evento(evento)
         print
         print "-------------------"
         print "Evento registrado"
         print "-------------------"
-     
+           
       elif ans == "10":
 	volver = True
 	  
@@ -532,22 +596,25 @@ while not salir:
       print("--------")
       print
       
-      nombre = raw_input("Nombre: ")
+      correo = raw_input("Correo: ")
       usuario = None
       
       inscritos = clei.get_inscritos()
       
+      # Revisar si el usuario ya existe chequeando por correo.
       x = 0
       while (x < len(inscritos)) and (usuario == None):
-	if inscritos[x].nombre == nombre:
+	if inscritos[x].get_correo() == correo:
 	  usuario = inscritos[x]
 	x += 1
       
       if usuario == None:
 	print
-	print("------------------------------------")
-	print("El usuario " + nombre + " no existe.")
-	print("------------------------------------")
+	print("--------------------------------------------")
+        print("No existe ningun usuario asociado al correo")
+        print
+        print(" \"" + correo + "\".")
+	print("--------------------------------------------")
 	print
 	ans = raw_input("Desea inscribirse? (S/N) ")
 	print
@@ -697,7 +764,12 @@ while not salir:
 	  print("----------")
 	  print
 	  print("[0] Evaluar Articulo")
-	  print      
+          print
+          cp = clei.get_cp()
+          presidente = cp.get_presidente()
+          if (usuario.get_correo() == presidente.get_correo()):
+            print("[1] Gestion de Articulos Empatados") 
+	    print 
 	  print("[10] Volver")
 	  print
 	  
@@ -719,13 +791,15 @@ while not salir:
 	    print
 
 	    # Evaluar articulo
-	    ans = raw_input(">> ")
-	    while not (ans.isdigit()):
+            articulos_usuario = usuario.get_articulos()
+
+            fin = False
+	    while not fin:
 	      ans = raw_input(">> ")
-	      
-	    ans = int(ans)
+              if ans.isdigit():
+                ans = int(ans)
+                fin = (ans < len(articulos_usuario) and (ans >= 0))
 	    
-	    articulos_usuario = usuario.get_articulos()
 	    titulo = articulos_usuario[ans]    
 	    
 	    fin = False
@@ -741,17 +815,43 @@ while not salir:
 		print("La puntuacion debe estar entre 1 y 5.")
 		continue
 	      else: 
-		print'%s %d %s' % ("La puntuacion dada fue ", puntos, ".")
+		print'%s %d %s' % ("la puntuacion dada fue ", puntos, ".")
 		resp = raw_input("Es correcto? (S/N) ")
-		fin = resp not in ["n", "N"]
+		fin = ans not in ["n", "N"]
   
 	    clei.evaluar(titulo, puntos)
 	    print_articulos(clei.get_articulos())
 	    
 	    usuario.remover_articulo(articulos_usuario[ans])
 	    
-	    evaluar_promedio(clei, titulo)
+	    #clei.evaluar_promedio(titulo)
 	  
+          elif ans == "1":
+	    if clei.get_pres_articulos():
+	      print
+              print("-------------------------------------------------------------------------------------")    
+	      print("La gestion no puede realizarse mientras el proceso de envio de articulos este activo.")
+	      print("-------------------------------------------------------------------------------------")    
+	      print
+              continue
+
+            os.system('clear')
+            print "aceptados"
+            print_articulos(clei.get_aceptados())
+            print "empatados"
+            print_articulos(clei.get_empatados())
+            print "rechazados"
+            print_articulos(clei.get_rechazados())
+            if not (len(clei.get_empatados()) <= 0):
+              usuario.gestionar_empatados(clei)
+
+            print "aceptados actualizada"
+            print_articulos(clei.get_aceptados())
+            print "empatados actualizada"
+            print_articulos(clei.get_empatados())
+            print "rechazados actualizada"
+            print_articulos(clei.get_rechazados())
+
 	  elif ans == "10":
 	    atras = True
     

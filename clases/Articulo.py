@@ -27,6 +27,8 @@ class Articulo:
       self.promedio = 0
       self.texto = raw_input("Texto: ")
       self.pais = raw_input("Pais: ")
+      self.estado_final = 0
+      self.texto = raw_input("Texto: ")
       
     def get_titulo(self):
       return self.titulo
@@ -81,6 +83,12 @@ class Articulo:
   
     def get_pais(self):
       return self.pais
+
+    def get_estado_final(self):
+      return self.estado_final
+
+    def set_estado_final(self, estado):
+      self.estado_final = estado
       
     def agregar_puntuacion(self, puntuacion):
       self.puntuacion += puntuacion
@@ -88,5 +96,5 @@ class Articulo:
     def promediar(self):
       puntuacion = self.get_puntuacion()
       num_eval = self.get_num_evaluaciones()
-      
       self.promedio = round(float(puntuacion / num_eval), 2)
+
