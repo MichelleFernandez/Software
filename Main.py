@@ -188,25 +188,25 @@ clei.set_max_articulos(3)
 #articulo6.num_evaluaciones = 3
 #articulo6.num_evaluadores = 3
 
-articulo7 = Articulo()
-articulo7.promedio = 4
-articulo7.num_evaluaciones = 3
-articulo7.num_evaluadores = 3
-
-articulo8 = Articulo()
-articulo8.promedio = 3
-articulo8.num_evaluaciones = 3
-articulo8.num_evaluadores = 3
-
-articulo9 = Articulo()
-articulo9.promedio = 3
-articulo9.num_evaluaciones = 3
-articulo9.num_evaluadores = 3
-
-articulo10 = Articulo()
-articulo10.promedio = 3
-articulo10.num_evaluaciones = 3
-articulo10.num_evaluadores = 3
+#articulo7 = Articulo()
+#articulo7.promedio = 4
+#articulo7.num_evaluaciones = 3
+#articulo7.num_evaluadores = 3
+#
+#articulo8 = Articulo()
+#articulo8.promedio = 3
+#articulo8.num_evaluaciones = 3
+#articulo8.num_evaluadores = 3
+#
+#articulo9 = Articulo()
+#articulo9.promedio = 3
+#articulo9.num_evaluaciones = 3
+#articulo9.num_evaluadores = 3
+#
+#articulo10 = Articulo()
+#articulo10.promedio = 3
+#articulo10.num_evaluaciones = 3
+#articulo10.num_evaluadores = 3
 
 #clei.articulos.append(articulo0)
 #clei.articulos.append(articulo1)
@@ -248,17 +248,17 @@ articulo10.num_evaluadores = 3
 #printArticulos(clei.empatados)
 #print
     
-clei.articulos.append(articulo7)
-clei.articulos.append(articulo8)
-clei.articulos.append(articulo9)
-clei.articulos.append(articulo10)
-
-print "ARTICULOS RECIBIDOS"
-print "-------------------"
-print
-print_articulos(clei.articulos)
-
-clei.armar_listas()
+#clei.articulos.append(articulo7)
+#clei.articulos.append(articulo8)
+#clei.articulos.append(articulo9)
+#clei.articulos.append(articulo10)
+#
+#print "ARTICULOS RECIBIDOS"
+#print "-------------------"
+#print
+#print_articulos(clei.articulos)
+#
+#clei.armar_listas()
 
 #clei.evaluar_promedio(articulo0.titulo)
 #clei.evaluar_promedio(articulo1.titulo)
@@ -268,24 +268,24 @@ clei.armar_listas()
 #clei.evaluar_promedio(articulo5.titulo)
 #clei.evaluar_promedio(articulo6.titulo)
 
-print "ARTICULOS ACEPTABLES"
-print "-------------------"
-print
-print_articulos(clei.aceptables)
-
-#clei.calcular_aceptados()
-
-print "ARTICULOS ACEPTADOS"
-print "-------------------"
-print
-print_articulos(clei.aceptados)
-print
-
-print "ARTICULOS EMPATADOS"
-print "-------------------"
-print
-print_articulos(clei.empatados)
-print
+#print "ARTICULOS ACEPTABLES"
+#print "-------------------"
+#print
+#print_articulos(clei.aceptables)
+#
+##clei.calcular_aceptados()
+#
+#print "ARTICULOS ACEPTADOS"
+#print "-------------------"
+#print
+#print_articulos(clei.aceptados)
+#print
+#
+#print "ARTICULOS EMPATADOS"
+#print "-------------------"
+#print
+#print_articulos(clei.empatados)
+#print
 
 #print "ARTICULOS RECHAZADOS"
 #print "--------------------"
