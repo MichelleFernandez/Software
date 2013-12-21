@@ -70,7 +70,7 @@ class Evento:
     return self.lugar
     
   def set_lugar(self,lugar,lista_espacios):
-    while not existe_lugar(lugar, lista_espacios):
+    while not self.existe_lugar(lugar, lista_espacios):
       print "Ingrese un id de lugar valido:"
       lugar = raw_input(">> ")
     self.lugar = lugar
@@ -116,8 +116,8 @@ class Evento:
   def existe_lugar(self, lugar, lista_espacios):
     for k in lista_espacios:
       if k.get_id()==lugar:
-	return true
-    return false
+	return True
+    return False
     
   def to_string(self):
     print

@@ -630,7 +630,7 @@ while not salir:
 	print("Ingrese Id del lugar a asignar: ")
 	print
 	lugar = raw_input(">> ")
-	evento.set_lugar(lugar,clei.get_espacios)
+	evento.set_lugar(lugar,clei.get_espacios())
 	print
         if (evento.get_tipo() in ["charla", "ponencia"]):
           evento.asignar_moderador(clei)
