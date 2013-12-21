@@ -15,6 +15,8 @@
 #	   Alejandro Guillen, 10-10333.
 #	   Donato Rolo, 10-10640.
 # ------------------------------------------------------------
+from Conferencia import *
+from Cp import *
 
 class Evento:
   def __init__(self):
@@ -24,7 +26,9 @@ class Evento:
     self.duracion = raw_input("Duracion: ")
     self.fecha = raw_input("Fecha: ")
     self.hora_inicio = raw_input("Hora de Inicio: ")
-    self.lugar = lugar
+    self.lugar = None
+#    self.lugar = lugar
+    self.moderador = None
   
   def get_id(self):
     return self.id
@@ -70,6 +74,44 @@ class Evento:
       print "Ingrese un id de lugar valido:"
       lugar = raw_input(">> ")
     self.lugar = lugar
+
+  def get_moderador(self):
+    return self.moderador
+
+  def set_moderador(self, moderador):
+    self.moderador = moderador
+
+  def asignar_moderador(self, conf):
+    print
+    print("MODERADOR")
+    print("---------")
+    print
+    
+    cp = conf.get_cp()
+    miembros = cp.get_miembros()
+    usuario = None
+
+    while (self.moderador == None):
+      correo = raw_input("correo: ")
+
+      # Revisar si el usuario ya existe chequeando por correo.
+      x = 0
+      while (x < len(miembros)) and (usuario == None):
+        if miembros[x].get_correo() == correo:
+          usuario = miembros[x]
+        x += 1
+      
+      if usuario == None:
+        print
+        print("----------------------------------------------")
+        print("No existe ningun Miembro CP asociado al correo")
+        print
+        print(" \"" + correo + "\".")
+        print("----------------------------------------------")
+        print
+
+      else:
+        self.moderador = miembros[x]
 	
   def existe_lugar(self, lugar, lista_espacios):
     for k in lista_espacios:
@@ -85,4 +127,6 @@ class Evento:
     print("Fecha: " + self.fecha)
     print("Hora de Inicio: " + self.hora_inicio)
     print("Lugar: " + self.lugar)
+    if (self.tipo in ["charla", "ponencia"]):
+      print("Moderador: " + self.moderador)
     print

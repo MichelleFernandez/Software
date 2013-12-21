@@ -579,7 +579,13 @@ while not salir:
         print "-------------------"
 	
       elif (ans == "9"):
+        if (clei.get_cp() == None):
+          print "Debe crearse un Comite de Programa previamente."
+          continue
+
 	evento = Evento()
+        if (evento.get_tipo() in ["charla", "ponencia"]):
+          evento.asignar_moderador(clei)
 	clei.agregar_evento(evento)
         print
         print "-------------------"
