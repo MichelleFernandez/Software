@@ -63,7 +63,7 @@ def calcular_aceptados_pais(self,aceptables,max_articulos):
             lista = diccionario[pais]
             lista_pais = dicc_pais[pais]
             cont = lista.pop(0)
-            cont = cont + 1
+            cont += 1
             lista.insert(0,cont)
             lista_pais.append(aceptables[x])
 	else:
@@ -84,33 +84,53 @@ def calcular_aceptados_pais(self,aceptables,max_articulos):
     print("Numero de articulos aceptados por pais: ")
     num = int(raw_input(">> "))
     
-    limite = len(diccionario)*int(num)
-    
-    while limite > max_articulos:
-        print("No es posible realizar la operacion. Seleccione un numero menor: ")
+    while num < 1 and num >= max_articulos:
+        print("No es posible realizar la operacion. Seleccione otro numero: ")
         num = int(raw_input(">> "))
-        limite = len(diccionario)*int(num)
+    
+    total_aceptados = 0
+    num_aceptables = len(aceptables)
+    
+    while num_aceptables > 0 and total_aceptados < max_articulos and num > 0:
+        num -= 1
         
-    for x in dicc_pais.keys():
-        lista = diccionario[x]
-        lista_pais = dicc_pais[x]
+        for x in dicc_pais.keys():
+            lista = diccionario[x]
+            lista_pais = dicc_pais[x]
         
-        cont = lista.pop(0)
+            cont = lista.pop(0)
         
-        if cont > num:
-            aux = 0
-            while aux < num:
+            if cont > 0 and total_aceptados < max_articulos:
                 articulo = lista_pais.pop(0)
-                aux += 1
-                aceptados.append(articulo)
-        else:
-            while cont > 0:
-                articulo = lista_pais.pop(0)
+                aceptados.append(articulo) 
+                total_aceptados += 1
                 cont -= 1
-                aceptados.append(articulo)
+                num_aceptables -= 1
+                dicc_pais[x] = lista_pais
+                
+            lista.insert(0,cont)
+            diccionario[x] = lista
+             
+    
+    if num_aceptables > 0 and total_aceptados < max_articulos:
+        aceptables.sort(key=lambda x: x.get_promedio(), reverse = True)
         
+        for x in range(len(aceptables)):
+            y = 0
+            fue_aceptado = True
+            
+            while (y < len(aceptados)) and not (aceptables[x].get_titulo() == aceptados[y].get_titulo()):
+                y += 1
+	
+                if y == len(aceptados):
+                    fue_aceptado = False
+                    
+            if not fue_aceptado and total_aceptados < max_articulos:
+                aceptados.append(aceptables[x])
+                total_aceptados += 1
+                
         
-    return(aceptados, empatados)
+    return(aceptados,empatados)
         
     
 def calcular_aceptados_nota(self,aceptables,max_articulos):
